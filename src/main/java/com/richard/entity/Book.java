@@ -1,12 +1,20 @@
-package com.richard.dto;
+package com.richard.entity;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class BookDto {
+@Entity
+public class Book {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String title;
   private String author;
   private int year;
   private String isbn;
-
 
   public Long getId() {
     return id;
