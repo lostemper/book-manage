@@ -22,7 +22,8 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public Optional<BookDto> getBookById(Long id) {
-    return null;
+    Optional<Book> bookOptional = bookRepository.findById(id);
+    return bookOptional.map(this::convertToDto);
   }
 
   private BookDto convertToDto(Book book) {
