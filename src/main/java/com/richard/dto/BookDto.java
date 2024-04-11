@@ -1,19 +1,12 @@
-package com.richard.entity;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+package com.richard.dto;
 
-@Entity
-public class Book {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookDto {
   private Long id;
-
   private String title;
   private String author;
-  private int year;
+  private int publicationYear;
   private String isbn;
+
 
   public Long getId() {
     return id;
@@ -39,12 +32,12 @@ public class Book {
     this.author = author;
   }
 
-  public int getYear() {
-    return year;
+  public int getPublicationYear() {
+    return publicationYear;
   }
 
-  public void setYear(int year) {
-    this.year = year;
+  public void setPublicationYear(int publicationYear) {
+    this.publicationYear = publicationYear;
   }
 
   public String getIsbn() {

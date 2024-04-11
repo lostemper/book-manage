@@ -1,6 +1,9 @@
 package com.richard.service;
-import com.richard.entity.Book;
+
+
+import com.richard.dto.BookDto;
+import java.util.Optional;
 
 public interface BookService {
-  Book getBookById(Long id);
+  Optional<BookDto> getBookById(Long id);
 }
