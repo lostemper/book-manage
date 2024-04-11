@@ -18,6 +18,7 @@ public class BookRepositoryTest {
   public void testFindById() {
     Book book = new Book();
     book.setTitle("Test Book");
+    book.setAuthor("ss");
     bookRepository.save(book);
     Optional<Book> result = bookRepository.findById(book.getId());
     assertEquals(Optional.of(book), result);
