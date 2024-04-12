@@ -26,6 +26,11 @@ public class BookServiceImpl implements BookService {
     return bookOptional.map(this::convertToDto);
   }
 
+  @Override
+  public BookDto addBook(BookDto bookDto) {
+    return null;
+  }
+
   private BookDto convertToDto(Book book) {
     return modelMapper.map(book, BookDto.class);
   }

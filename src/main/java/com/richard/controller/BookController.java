@@ -1,10 +1,9 @@
 package com.richard.controller;
 import com.richard.dto.BookDto;
 import com.richard.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
 import java.util.Optional;
@@ -27,5 +26,11 @@ public class BookController {
     } else {
       return ResponseEntity.notFound().build();
     }
+  }
+
+  @PostMapping
+  public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+    BookDto savedBook = bookService.addBook(bookDto);
+    return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
   }
 }
