@@ -10,7 +10,10 @@ import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import com.richard.entity.Book;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -65,5 +68,21 @@ public class BookServiceImplTest {
 
     // Verify the result
     Assertions.assertTrue(result.isEmpty());
+  }
+
+  @Test
+  public void testAddBook() {
+    // Prepare test data
+    BookDto bookDto = new BookDto();
+    bookDto.setTitle("Test Book");
+    bookDto.setAuthor("Test Author");
+
+    // Call the service method
+    BookDto savedBook = bookService.addBook(bookDto);
+
+    // Verify the result
+    assertNotNull(savedBook);
+    assertEquals(bookDto.getTitle(), savedBook.getTitle());
+    assertEquals(bookDto.getAuthor(), savedBook.getAuthor());
   }
 }
