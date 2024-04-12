@@ -1,5 +1,6 @@
 package com.richard.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richard.dto.BookDto;
 import com.richard.service.BookService;
 import org.junit.jupiter.api.Test;
@@ -9,11 +10,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.awt.print.Book;
 import java.util.Optional;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
@@ -38,8 +38,26 @@ public class BookControllerTest {
 
     mockMvc.perform(MockMvcRequestBuilders.get("/books/{id}", bookId)
       .accept(MediaType.APPLICATION_JSON_VALUE))
-      .andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(bookId))
-      .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Java Book"));
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("id").value(bookId))
+      .andExpect(jsonPath("title").value("Java Book"));
+  }
+
+  @Test
+  public void testAddBook() throws Exception {
+    // Prepare test data
+    BookDto bookDto = new BookDto();
+    bookDto.setTitle("Test Book");
+    bookDto.setAuthor("Test Author");
+
+    // Convert bookDto to JSON
+    ObjectMapper objectMapper = new ObjectMapper();
+    String bookDtoJson = objectMapper.writeValueAsString(bookDto);
+
+    // Perform the MVC request and validate the response
+    mockMvc.perform(MockMvcRequestBuilders.post("/books")
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(bookDtoJson))
+      .andExpect(status().isCreated());
   }
 }
