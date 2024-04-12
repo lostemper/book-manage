@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 import com.richard.entity.Book;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,7 +23,7 @@ public class BookServiceImplTest {
   @Mock
   private BookRepository bookRepository;
 
-  @Mock
+  @Spy
   private ModelMapper modelMapper;
 
   @InjectMocks
@@ -76,10 +77,18 @@ public class BookServiceImplTest {
     BookDto bookDto = new BookDto();
     bookDto.setTitle("Test Book");
     bookDto.setAuthor("Test Author");
+    bookDto.setIsbn("1234567890");
+    bookDto.setYear(2022);
 
+    Book bookEntity = new Book();
+    bookEntity.setTitle(bookDto.getTitle());
+    bookEntity.setAuthor(bookDto.getAuthor());
+    bookEntity.setIsbn(bookDto.getIsbn());
+    bookEntity.setYear(bookDto.getYear());
+    // Mock the behavior of bookRepository.save() method
+    when(bookRepository.save(any(Book.class))).thenReturn(bookEntity);
     // Call the service method
     BookDto savedBook = bookService.addBook(bookDto);
-
     // Verify the result
     assertNotNull(savedBook);
     assertEquals(bookDto.getTitle(), savedBook.getTitle());
