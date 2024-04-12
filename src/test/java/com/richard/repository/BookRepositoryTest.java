@@ -23,4 +23,18 @@ public class BookRepositoryTest {
     Optional<Book> result = bookRepository.findById(book.getId());
     assertEquals(Optional.of(book), result);
   }
+  @Test
+  public void testSaveBook() {
+    // Prepare test data
+    Book book = new Book();
+    book.setTitle("New Book");
+    book.setAuthor("New Author");
+    book.setIsbn("1234567890123");
+    book.setYear(2024);
+    // Invoke the repository method
+    Book savedBook = bookRepository.save(book);
+    // Verify the result
+    assertEquals(book, savedBook);
+  }
+
 }
