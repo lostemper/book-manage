@@ -54,6 +54,8 @@ public class BookControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
     String bookDtoJson = objectMapper.writeValueAsString(bookDto);
 
+    when(bookService.addBook(any(BookDto.class))).thenReturn(bookDto);
+
     // Perform the MVC request and validate the response
     mockMvc.perform(MockMvcRequestBuilders.post("/books")
         .contentType(MediaType.APPLICATION_JSON_VALUE)
