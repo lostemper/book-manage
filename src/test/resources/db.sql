@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS book_management;
+
+USE book_management;
+
+CREATE TABLE IF NOT EXISTS book (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    publish_year INT NOT NULL,
+    isbn VARCHAR(13) NOT NULL
+) ENGINE=InnoDB;
