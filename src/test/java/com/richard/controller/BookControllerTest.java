@@ -10,6 +10,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -87,4 +89,11 @@ public class BookControllerTest {
     verify(bookService, times(1)).updateBook(eq(bookId), any(BookDto.class));
   }
 
+  @Test
+  public void testDeleteBookById() throws Exception {
+    Long bookId = 1L;
+    // Perform the DELETE request and verify the response
+    mockMvc.perform(MockMvcRequestBuilders.delete("/books/{id}", bookId))
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
 }
