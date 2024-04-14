@@ -5,7 +5,7 @@ import EditBookForm from './EditBookForm';
 const BookList = ({ books, onEditBook, onDeleteBook }) => {
   const [editingBookId, setEditingBookId] = useState(null);
 
-  const handleEditClick = (id) => {
+  const handleEditBook = (id) => {
     setEditingBookId(id);
   };
   const handleCancelEdit = () => {
@@ -21,7 +21,7 @@ const BookList = ({ books, onEditBook, onDeleteBook }) => {
             {editingBookId === book.id ? (
               <EditBookForm book={book} onUpdateBook={onEditBook} onCancelEdit={handleCancelEdit} />
             ) : (
-              <Book book={book} onEditClick={() => handleEditClick(book.id)}   onDeleteClick={onDeleteBook}/>
+              <Book book={book} onEditClick={() => handleEditBook(book.id)}   onDeleteClick={onDeleteBook}/>
             )}
           </li>
         ))}

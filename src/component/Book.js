@@ -13,13 +13,18 @@ const Book = ({ book, onEditClick, onDeleteClick }) => {
     setShowDeleteConfirmation(false);
   };
 
+  const handleEditBook = (id) => {
+    onEditClick(id);
+  };
+
+
   return (
     <div>
       <h3>{title}</h3>
       <p>Author: {author}</p>
       <p>Year: {year}</p>
       <p>ISBN: {isbn}</p>
-      <button onClick={() => onEditClick(id)}>Edit</button>
+      <button onClick={() => handleEditBook(id)}>Edit</button>
       <button onClick={handleDeleteConfirmation}>Delete</button>
       {showDeleteConfirmation && (
         <div>
