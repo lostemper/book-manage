@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import BookList from '../BookList';
+import BookList from '../component/BookList';
 
 describe('BookList Component', () => {
   test('renders book list correctly', () => {
