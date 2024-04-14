@@ -3,6 +3,8 @@ import './App.css';
 import axios from 'axios';
 import AddBookForm from './component/AddBookForm';
 import BookList from './component/BookList';
+import { API_BASE_URL } from './config';
+
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -14,7 +16,7 @@ function App() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/books');
+      const response = await axios.get(`${API_BASE_URL}/books`);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -23,7 +25,7 @@ function App() {
 
   const addBook = async (book) => {
     try {
-      const response = await axios.post('http://localhost:8080/books', book);
+      const response = await axios.post(`${API_BASE_URL}/books`, book);
       setBooks([...books, response.data]);
       setShowAddForm(false);
     } catch (error) {
@@ -35,7 +37,7 @@ function App() {
     try {
       const updatedBooks = books.map(book => (book.id === updatedBook.id ? updatedBook : book));
       setBooks(updatedBooks);
-      await axios.put(`http://localhost:8080/books/${updatedBook.id}`, updatedBook);
+      await axios.put(`${API_BASE_URL}/books/${updatedBook.id}`, updatedBook);
       fetchBooks(); // Update the book list after updating a book
       //alert('Book updated successfully!'); // Show success message
     } catch (error) {
@@ -47,7 +49,7 @@ function App() {
 
   const handleDeleteBook = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/books/${id}`);
+      await axios.delete(`${API_BASE_URL}/books/${id}`);
       setBooks(books.filter(book => book.id !== id));
     } catch (error) {
       console.error('Error deleting book:', error);
