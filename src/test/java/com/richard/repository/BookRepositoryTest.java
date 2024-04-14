@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 public class BookRepositoryTest {
 
@@ -37,4 +35,18 @@ public class BookRepositoryTest {
     assertEquals(book, savedBook);
   }
 
+  @Test
+  public void testDeleteBook() {
+    Book book = new Book();
+    book.setTitle("Test Book");
+    book.setAuthor("Test Author");
+    bookRepository.save(book);
+
+    Optional<Book> savedBook = bookRepository.findById(book.getId());
+    assertTrue(savedBook.isPresent());
+
+    bookRepository.deleteById(book.getId());
+    Optional<Book> deletedBook = bookRepository.findById(book.getId());
+    assertFalse(deletedBook.isPresent());
+  }
 }
