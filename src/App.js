@@ -6,6 +6,7 @@ import BookList from './component/BookList';
 
 function App() {
   const [books, setBooks] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false); // 新增表单的显示状态
 
   useEffect(() => {
     fetchBooks();
@@ -24,6 +25,7 @@ function App() {
     try {
       const response = await axios.post('http://localhost:8080/books', book);
       setBooks([...books, response.data]);
+      setShowAddForm(false);
     } catch (error) {
       console.error('Error adding book:', error);
     }
@@ -55,10 +57,25 @@ function App() {
 
 
   return (
-    <div className="App">
-      <h1>Book Management System</h1>
-      <AddBookForm onAddBook={addBook} />
-      <div>
+    <div className="container">
+      <div className="header">
+        <h1>Book Management System</h1>
+      </div>
+
+
+      <div className="book-list">
+        <div className="add-book">
+          <div>
+            <button onClick={() => setShowAddForm(!showAddForm)}>Add Book</button>
+          </div>
+
+          <div>
+            {showAddForm && <AddBookForm onAddBook={addBook}/>}
+          </div>
+
+
+
+        </div>
         <BookList
           books={books}
           onEditBook={handleEditBook}

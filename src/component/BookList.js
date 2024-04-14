@@ -19,7 +19,7 @@ const BookList = ({ books, onEditBook, onDeleteBook}) => {
   }
 
   return (
-    <div>
+    <div className="book-list">
       <h2>Books</h2>
       <ul>
         {books.map((book) => (

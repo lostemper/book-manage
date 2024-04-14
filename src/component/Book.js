@@ -19,17 +19,20 @@ const Book = ({ book, onEditClick, onDeleteClick }) => {
 
 
   return (
-    <div>
+    <div className="book-item">
       <h3>{title}</h3>
-      <p>Author: {author}</p>
+      <p style={{marginTop: 2 + 'em'}}>Author: {author}</p>
       <p>Year: {year}</p>
       <p>ISBN: {isbn}</p>
-      <button onClick={() => handleEditBook(id)}>Edit</button>
-      <button onClick={handleDeleteConfirmation}>Delete</button>
+      <div>
+        <button  style={{marginRight: 2 + 'em'}} onClick={() => handleEditBook(id)}>Edit</button>
+        <button onClick={handleDeleteConfirmation}>Delete</button>
+      </div>
+
       {showDeleteConfirmation && (
-        <div>
+        <div className="confirmation-box">
           <p>Are you sure you want to delete this book?</p>
-          <button onClick={handleDelete}>Yes</button>
+          <button  style={{marginRight: 2 + 'em'}}   onClick={handleDelete}>Yes</button>
           <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
         </div>
       )}
