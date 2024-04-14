@@ -14,6 +14,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -143,5 +146,41 @@ public class BookServiceImplTest {
     assertTrue(bookService.deleteBookById(1L));
     // Test deleteBookById method with non-existing book id
     assertFalse(bookService.deleteBookById(2L));
+  }
+
+  @Test
+  public void testGetAllBooks() {
+    // Prepare test data
+    Book book1 = new Book();
+    book1.setId(1L);
+    book1.setTitle("Book 1");
+
+    Book book2 = new Book();
+    book2.setId(2L);
+    book2.setTitle("Book 2");
+
+    List<Book> books = Arrays.asList(book1, book2);
+
+    when(bookRepository.findAll()).thenReturn(books);
+
+    // Mock mapping
+    BookDto bookDto1 = new BookDto();
+    bookDto1.setId(1L);
+    bookDto1.setTitle("Book 1");
+
+    BookDto bookDto2 = new BookDto();
+    bookDto2.setId(2L);
+    bookDto2.setTitle("Book 2");
+
+    when(modelMapper.map(book1, BookDto.class)).thenReturn(bookDto1);
+    when(modelMapper.map(book2, BookDto.class)).thenReturn(bookDto2);
+
+    // Call the method under test
+    List<BookDto> result = bookService.getAllBooks();
+
+    // Assertions
+    assertEquals(2, result.size());
+    assertEquals(bookDto1, result.get(0));
+    assertEquals(bookDto2, result.get(1));
   }
 }
