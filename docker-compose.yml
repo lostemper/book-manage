@@ -18,13 +18,11 @@ services:
     image: registry.cn-heyuan.aliyuncs.com/richard-dev/book-manage-frontend:1.0
     ports:
       - "80:80"
-    environment:
-      API_BASE_URL: http://backend:8080
     networks:
       - app-network
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     ports:
       - "3306:3306"
     environment:
