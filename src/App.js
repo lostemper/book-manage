@@ -31,12 +31,14 @@ function App() {
 
   const handleEditBook = async (updatedBook) => {
     try {
+      const updatedBooks = books.map(book => (book.id === updatedBook.id ? updatedBook : book));
+      setBooks(updatedBooks);
       await axios.put(`http://localhost:8080/books/${updatedBook.id}`, updatedBook);
       fetchBooks(); // Update the book list after updating a book
-      alert('Book updated successfully!'); // Show success message
+      //alert('Book updated successfully!'); // Show success message
     } catch (error) {
       console.error('Error updating book:', error);
-      alert('Failed to update book.'); // Show error message
+      //alert('Failed to update book.'); // Show error message
     }
   };
 
@@ -49,6 +51,8 @@ function App() {
       console.error('Error deleting book:', error);
     }
   };
+
+
 
   return (
     <div className="App">

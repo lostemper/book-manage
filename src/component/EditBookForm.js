@@ -19,12 +19,12 @@ const EditBookForm = ({ book, onUpdateBook }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onUpdateBook({ ...book, title, author, year, isbn });
-    setShowForm(false); // Hide the form after successful update
+
+
   };
 
   return (
-    <>
-      {showForm && (
+
         <form onSubmit={handleSubmit}>
           <label htmlFor="title">Title</label>
           <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -40,8 +40,8 @@ const EditBookForm = ({ book, onUpdateBook }) => {
 
           <button type="submit">Update</button>
         </form>
-      )}
-    </>
+
+
   );
 };
 

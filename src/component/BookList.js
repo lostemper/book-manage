@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Book from './Book';
 import EditBookForm from './EditBookForm';
 
-const BookList = ({ books, onEditBook, onDeleteBook }) => {
+const BookList = ({ books, onEditBook, onDeleteBook}) => {
   const [editingBookId, setEditingBookId] = useState(null);
 
   const handleEditBook = (id) => {
@@ -12,6 +12,12 @@ const BookList = ({ books, onEditBook, onDeleteBook }) => {
     setEditingBookId(null);
   };
 
+  const onUpdateBook = (book)  => {
+    onEditBook(book);
+    setEditingBookId(null);
+
+  }
+
   return (
     <div>
       <h2>Books</h2>
@@ -19,7 +25,8 @@ const BookList = ({ books, onEditBook, onDeleteBook }) => {
         {books.map((book) => (
           <li key={book.id}>
             {editingBookId === book.id ? (
-              <EditBookForm book={book} onUpdateBook={onEditBook} onCancelEdit={handleCancelEdit} />
+              <EditBookForm book={book} onUpdateBook= {onUpdateBook}
+                 onCancelEdit={handleCancelEdit} />
             ) : (
               <Book book={book} onEditClick={() => handleEditBook(book.id)}   onDeleteClick={onDeleteBook}/>
             )}
