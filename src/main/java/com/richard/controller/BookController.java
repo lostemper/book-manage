@@ -4,8 +4,6 @@ import com.richard.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.print.Book;
 import java.util.Optional;
 
 @RestController
@@ -32,5 +30,15 @@ public class BookController {
   public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
     BookDto savedBook = bookService.addBook(bookDto);
     return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
+  }
+
+  @PutMapping("/books/{id}")
+  public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+    BookDto updatedBookDto = bookService.updateBook(id, bookDto);
+    if (updatedBookDto != null) {
+      return ResponseEntity.ok(updatedBookDto);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 }

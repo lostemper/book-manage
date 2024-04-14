@@ -74,6 +74,8 @@ public class BookControllerTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
+    when(bookService.updateBook(eq(bookId), any(BookDto.class))).thenReturn(updatedBookDto);
+
     // Perform the PUT request to update the book
     mockMvc.perform(MockMvcRequestBuilders.put("/books/{id}", bookId)
         .contentType(MediaType.APPLICATION_JSON)

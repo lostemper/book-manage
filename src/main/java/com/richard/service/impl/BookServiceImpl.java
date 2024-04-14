@@ -33,6 +33,11 @@ public class BookServiceImpl implements BookService {
     return modelMapper.map(savedBook, BookDto.class);
   }
 
+  @Override
+  public BookDto updateBook(Long id, BookDto bookDto) {
+    return null;
+  }
+
   private BookDto convertToDto(Book book) {
     return modelMapper.map(book, BookDto.class);
   }
