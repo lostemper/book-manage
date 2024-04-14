@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -97,5 +99,31 @@ public class BookControllerTest {
     // Perform the DELETE request and verify the response
     mockMvc.perform(MockMvcRequestBuilders.delete("/books/{id}", bookId))
       .andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
+  @Test
+  public void testGetAllBooks() throws Exception {
+    // Prepare test data
+    List<BookDto> books = new ArrayList<>();
+    BookDto book1 = new BookDto();
+    book1.setId(1L);
+    book1.setTitle("book1");
+    book1.setAuthor("author1");
+    books.add(book1);
+    BookDto book2 = new BookDto();
+    book1.setId(2L);
+    book1.setTitle("book2");
+    book1.setAuthor("author2");
+    books.add(book2);
+
+    // Perform GET request
+    mockMvc.perform(MockMvcRequestBuilders.get("/books"))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$[0].id").value(1))
+      .andExpect(jsonPath("$[0].title").value("book1"))
+      .andExpect(jsonPath("$[0].author").value("author1"))
+      .andExpect(jsonPath("$[1].id").value(2))
+      .andExpect(jsonPath("$[1].title").value("book2"))
+      .andExpect(jsonPath("$[1].author").value("author2"));
   }
 }
