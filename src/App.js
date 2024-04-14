@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
 import './App.css';
-import AddBookForm from './AddBookForm';
-
+import AddBookForm from './component/AddBookForm';
+import BookList from './component/BookList';
 function App() {
   const [books, setBooks] = useState([]);
 
   const addBook = (book) => {
     setBooks([...books, book]);
   };
+  const handleEditBook = (id) => {
+    const editedBook = books.find(book => book.id === id);
+    console.log(`Editing book: ${editedBook.title} (ID: ${id})`);
+  };
+
+
 
   return (
     <div className="App">
       <h1>Book Management System</h1>
       <AddBookForm onAddBook={addBook} />
       <div>
-        <h2>Books</h2>
-        <ul>
-          {books.map((book, index) => (
-            <li key={index}>
-              <div>Title: {book.title}</div>
-              <div>Author: {book.author}</div>
-              <div>Year: {book.year}</div>
-              <div>ISBN: {book.isbn}</div>
-            </li>
-          ))}
-        </ul>
+        <BookList books={books}  onEditBook={handleEditBook} />
       </div>
     </div>
   );
