@@ -3,7 +3,7 @@
 ```
 git clone -b backend https://github.com/lostemper/book-manage.git
 cd path/to/backend
-mvn clean package
+mvn clean  package -DskipTests
 docker build -t book-manage-backend .
 docker images
 #out put
