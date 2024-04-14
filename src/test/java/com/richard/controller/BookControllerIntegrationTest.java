@@ -26,7 +26,7 @@ public class BookControllerIntegrationTest {
     mockMvc.perform(MockMvcRequestBuilders.post("/books")
         .contentType(MediaType.APPLICATION_JSON)
         .content(requestBody))
-      .andExpect(status().isOk());
+      .andExpect(status().isCreated());
   }
 
   @Test
