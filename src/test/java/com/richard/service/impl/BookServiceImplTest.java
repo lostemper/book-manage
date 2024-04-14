@@ -12,9 +12,7 @@ import org.modelmapper.ModelMapper;
 import com.richard.entity.Book;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.mockito.ArgumentMatchers.any;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
 
@@ -136,7 +134,17 @@ public class BookServiceImplTest {
 
   @Test
   public void testDeleteBookById() {
-    // Test deleteBookById
+    // Mock the behavior of bookRepository.existsById() method
+    when(bookRepository.existsById(1L)).thenReturn(true);
+    when(bookRepository.existsById(2L)).thenReturn(false);
+
+    // Mock the behavior of bookRepository.deleteById() method
+    doNothing().when(bookRepository).deleteById(any(Long.class));
+
+    // Test deleteBookById method with existing book id
     assertTrue(bookService.deleteBookById(1L));
+
+    // Test deleteBookById method with non-existing book id
+    assertFalse(bookService.deleteBookById(2L));
   }
 }
