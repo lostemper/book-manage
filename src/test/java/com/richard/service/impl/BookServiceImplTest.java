@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
 
@@ -131,5 +132,11 @@ public class BookServiceImplTest {
 
     // Verify the result
     assertEquals(bookDto, result);
+  }
+
+  @Test
+  public void testDeleteBookById() {
+    // Test deleteBookById
+    assertTrue(bookService.deleteBookById(1L));
   }
 }
