@@ -11,11 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(BookController.class)
 public class BookControllerTest {
@@ -62,4 +63,24 @@ public class BookControllerTest {
         .content(bookDtoJson))
       .andExpect(status().isCreated());
   }
+
+  @Test
+  public void testUpdateBook() throws Exception {
+    // Prepare test data
+    Long bookId = 1L;
+    BookDto updatedBookDto = new BookDto();
+    updatedBookDto.setTitle("Updated Title");
+    updatedBookDto.setAuthor("Updated Author");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    // Perform the PUT request to update the book
+    mockMvc.perform(MockMvcRequestBuilders.put("/books/{id}", bookId)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(updatedBookDto)))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("title").value("Updated Title"))
+      .andExpect(jsonPath("author").value("Updated Author"));
+  }
+
 }
