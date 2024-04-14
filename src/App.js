@@ -1,18 +1,31 @@
-// App.js
-
-import React from 'react';
-import BookList from './component/BookList';
-
-const books = [
-  { id: 1, title: 'Book 1', author: 'Author 1' },
-  { id: 2, title: 'Book 2', author: 'Author 2' },
-  { id: 3, title: 'Book 3', author: 'Author 3' },
-];
+import React, { useState } from 'react';
+import './App.css';
+import AddBookForm from './AddBookForm';
 
 function App() {
+  const [books, setBooks] = useState([]);
+
+  const addBook = (book) => {
+    setBooks([...books, book]);
+  };
+
   return (
     <div className="App">
-      <BookList books={books} />
+      <h1>Book Management System</h1>
+      <AddBookForm onAddBook={addBook} />
+      <div>
+        <h2>Books</h2>
+        <ul>
+          {books.map((book, index) => (
+            <li key={index}>
+              <div>Title: {book.title}</div>
+              <div>Author: {book.author}</div>
+              <div>Year: {book.year}</div>
+              <div>ISBN: {book.isbn}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

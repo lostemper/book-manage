@@ -1,15 +1,32 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import AddBookForm from '../component/AddBookForm';
 
-test('adds a new book when submitted', () => {
-  const handleAdd = jest.fn();
-  const { getByPlaceholderText, getByText } = render(<AddBookForm onAdd={handleAdd} />);
+describe('AddBookForm', () => {
+  test('renders form inputs', () => {
+    const { getByLabelText } = render(<AddBookForm />);
 
-  fireEvent.change(getByPlaceholderText('Title'), { target: { value: 'New Book' } });
-  fireEvent.change(getByPlaceholderText('Author'), { target: { value: 'Author Name' } });
-  fireEvent.click(getByText('Add Book'));
+    expect(getByLabelText('Title')).toBeInTheDocument();
+    expect(getByLabelText('Author')).toBeInTheDocument();
+    expect(getByLabelText('Year')).toBeInTheDocument();
+    expect(getByLabelText('ISBN')).toBeInTheDocument();
+  });
 
-  expect(handleAdd).toHaveBeenCalledWith({ title: 'New Book', author: 'Author Name' });
+  test('calls onAddBook with correct book data when form is submitted', () => {
+    const onAddBook = jest.fn();
+    const { getByLabelText, getByText } = render(<AddBookForm onAddBook={onAddBook} />);
+
+    fireEvent.change(getByLabelText('Title'), { target: { value: 'Test Book' } });
+    fireEvent.change(getByLabelText('Author'), { target: { value: 'Test Author' } });
+    fireEvent.change(getByLabelText('Year'), { target: { value: '2024' } });
+    fireEvent.change(getByLabelText('ISBN'), { target: { value: '1234567890' } });
+    fireEvent.click(getByText('Submit'));
+
+    expect(onAddBook).toHaveBeenCalledWith({
+      title: 'Test Book',
+      author: 'Test Author',
+      year: '2024',
+      isbn: '1234567890'
+    });
+  });
 });
