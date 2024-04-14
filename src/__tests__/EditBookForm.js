@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import EditBookForm from '../EditBookForm';
+import EditBookForm from '../component/EditBookForm';
 
 describe('EditBookForm', () => {
   const mockBook = {
