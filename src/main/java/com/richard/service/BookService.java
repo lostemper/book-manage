@@ -2,6 +2,8 @@ package com.richard.service;
 
 
 import com.richard.dto.BookDto;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
@@ -9,4 +11,5 @@ public interface BookService {
   BookDto addBook(BookDto bookDto);
   BookDto updateBook(Long id, BookDto bookDto);
   boolean deleteBookById(Long id);
+  List<BookDto> getAllBooks();
 }

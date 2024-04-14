@@ -7,7 +7,9 @@ import com.richard.service.BookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -59,6 +61,11 @@ public class BookServiceImpl implements BookService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public List<BookDto> getAllBooks() {
+    return null;
   }
 
 

@@ -111,10 +111,12 @@ public class BookControllerTest {
     book1.setAuthor("author1");
     books.add(book1);
     BookDto book2 = new BookDto();
-    book1.setId(2L);
-    book1.setTitle("book2");
-    book1.setAuthor("author2");
+    book2.setId(2L);
+    book2.setTitle("book2");
+    book2.setAuthor("author2");
     books.add(book2);
+
+    when(bookService.getAllBooks()).thenReturn(books);
 
     // Perform GET request
     mockMvc.perform(MockMvcRequestBuilders.get("/books"))
