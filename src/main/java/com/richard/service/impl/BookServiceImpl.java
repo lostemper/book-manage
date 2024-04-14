@@ -35,8 +35,23 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public BookDto updateBook(Long id, BookDto bookDto) {
-    return null;
+    Optional<Book> optionalBook = bookRepository.findById(id);
+    if (optionalBook.isPresent()) {
+      Book existingBook = optionalBook.get();
+      // Update the existing book with new data
+      existingBook.setTitle(bookDto.getTitle());
+      existingBook.setAuthor(bookDto.getAuthor());
+      existingBook.setYear(bookDto.getYear()); // Assuming year is also updated
+      // Save the updated book
+      Book updatedBook = bookRepository.save(existingBook);
+      // Map the updated book entity to DTO
+      return modelMapper.map(updatedBook, BookDto.class);
+    } else {
+      // If book with given id is not found, return null or throw an exception
+      return null;
+    }
   }
+
 
   private BookDto convertToDto(Book book) {
     return modelMapper.map(book, BookDto.class);

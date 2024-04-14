@@ -11,10 +11,10 @@ import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 import com.richard.entity.Book;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -93,5 +93,43 @@ public class BookServiceImplTest {
     assertNotNull(savedBook);
     assertEquals(bookDto.getTitle(), savedBook.getTitle());
     assertEquals(bookDto.getAuthor(), savedBook.getAuthor());
+  }
+
+  @Test
+  public void testUpdateBook() {
+    // Prepare test data
+    Long bookId = 1L;
+    BookDto bookDto = new BookDto();
+    bookDto.setId(bookId);
+    bookDto.setTitle("Updated Title");
+    bookDto.setAuthor("Updated Author");
+    bookDto.setYear(2024); // Assuming year is also updated
+
+    // Mock the behavior of bookRepository.findById() method
+    Book existingBook = new Book();
+    existingBook.setId(bookId);
+    when(bookRepository.findById(bookId)).thenReturn(Optional.of(existingBook));
+
+    // Mock the behavior of bookRepository.save() method
+    Book updatedBookEntity = new Book();
+    updatedBookEntity.setId(bookId);
+    updatedBookEntity.setTitle(bookDto.getTitle());
+    updatedBookEntity.setAuthor(bookDto.getAuthor());
+    updatedBookEntity.setYear(bookDto.getYear());
+    when(bookRepository.save(any(Book.class))).thenReturn(updatedBookEntity);
+
+    // Mock the behavior of modelMapper.map() method
+    when(modelMapper.map(updatedBookEntity, BookDto.class)).thenReturn(bookDto);
+
+    // Call the service method
+    BookDto result = bookService.updateBook(bookId, bookDto);
+
+    // Verify the interactions
+    verify(bookRepository, times(1)).findById(bookId);
+    verify(bookRepository, times(1)).save(any(Book.class));
+    verify(modelMapper, times(1)).map(updatedBookEntity, BookDto.class);
+
+    // Verify the result
+    assertEquals(bookDto, result);
   }
 }
