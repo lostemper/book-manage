@@ -12,6 +12,10 @@ function App() {
     const editedBook = books.find(book => book.id === id);
     console.log(`Editing book: ${editedBook.title} (ID: ${id})`);
   };
+  const handleDeleteBook = (id) => {
+    setBooks(books.filter(book => book.id !== id));
+  };
+
 
 
 
@@ -20,7 +24,7 @@ function App() {
       <h1>Book Management System</h1>
       <AddBookForm onAddBook={addBook} />
       <div>
-        <BookList books={books}  onEditBook={handleEditBook} />
+        <BookList books={books}  onEditBook={handleEditBook}  onDeleteBook={handleDeleteBook} />
       </div>
     </div>
   );

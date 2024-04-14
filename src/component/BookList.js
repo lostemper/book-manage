@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import Book from './Book';
 import EditBookForm from './EditBookForm';
 
-const BookList = ({ books, onEditBook }) => {
+const BookList = ({ books, onEditBook, onDeleteBook }) => {
   const [editingBookId, setEditingBookId] = useState(null);
 
   const handleEditClick = (id) => {
     setEditingBookId(id);
   };
-
   const handleCancelEdit = () => {
     setEditingBookId(null);
   };
@@ -22,7 +21,7 @@ const BookList = ({ books, onEditBook }) => {
             {editingBookId === book.id ? (
               <EditBookForm book={book} onUpdateBook={onEditBook} onCancelEdit={handleCancelEdit} />
             ) : (
-              <Book book={book} onEditClick={() => handleEditClick(book.id)} />
+              <Book book={book} onEditClick={() => handleEditClick(book.id)}   onDeleteClick={onDeleteBook}/>
             )}
           </li>
         ))}

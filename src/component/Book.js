@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Book = ({ book, onEditClick }) => {
+const Book = ({ book, onEditClick, onDeleteClick }) => {
   const { id, title, author, year, isbn } = book;
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const handleDeleteConfirmation = () => {
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleDelete = () => {
+    onDeleteClick(id);
+    setShowDeleteConfirmation(false);
+  };
 
   return (
     <div>
@@ -10,6 +20,14 @@ const Book = ({ book, onEditClick }) => {
       <p>Year: {year}</p>
       <p>ISBN: {isbn}</p>
       <button onClick={() => onEditClick(id)}>Edit</button>
+      <button onClick={handleDeleteConfirmation}>Delete</button>
+      {showDeleteConfirmation && (
+        <div>
+          <p>Are you sure you want to delete this book?</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+        </div>
+      )}
     </div>
   );
 };
