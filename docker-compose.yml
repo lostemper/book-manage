@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  backend:
+    image: registry.cn-heyuan.aliyuncs.com/richard-dev/book-manage-backend:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/book_management?createDatabaseIfNotExist=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  frontend:
+    image: registry.cn-heyuan.aliyuncs.com/richard-dev/book-manage-frontend:1.0
+    ports:
+      - "80:80"
+    environment:
+      API_BASE_URL: http://backend:8080
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: book_management
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.108.0.0/16
+
