@@ -92,6 +92,8 @@ public class BookControllerTest {
   @Test
   public void testDeleteBookById() throws Exception {
     Long bookId = 1L;
+    // Mock the behavior of the service method
+    when(bookService.deleteBookById(bookId)).thenReturn(true);
     // Perform the DELETE request and verify the response
     mockMvc.perform(MockMvcRequestBuilders.delete("/books/{id}", bookId))
       .andExpect(MockMvcResultMatchers.status().isOk());

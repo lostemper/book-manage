@@ -52,6 +52,11 @@ public class BookServiceImpl implements BookService {
     }
   }
 
+  @Override
+  public boolean deleteBookById(Long id) {
+    return false;
+  }
+
 
   private BookDto convertToDto(Book book) {
     return modelMapper.map(book, BookDto.class);
