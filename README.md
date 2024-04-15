@@ -64,7 +64,7 @@ newgrp docker
 #when install  docker-ce also installed docker compose
 docker compose --version
 ```
-#### 4 ssh to ECS and deploy by docker compose
+#### 4. ssh to ECS and deploy by docker compose
 ```
 #upload docker-compose.yml file
 sudo rz 
@@ -73,4 +73,6 @@ docker login --username=lostemper@aliyun.com registry.cn-heyuan.aliyuncs.com
 #enter password
 docker compose up -d
 ```
+#### 5. 在线测试地址
+http://47.120.11.44/
 
