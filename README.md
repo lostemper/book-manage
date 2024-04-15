@@ -26,13 +26,21 @@ eafe6e032dbd: Pushed
 #### 2.build frontend docker image and push to repository
 ```
 git clone -b frontend https://github.com/lostemper/book-manage.git
+
 cd path/to/frontend
+#modify path/to/frontend/config.js
+#this is for local test
+export const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
+#this is for online env
+export const API_BASE_URL = '/api';
+
 docker build -t book-manage-frontend .
 docker  images
 #output 
 REPOSITORY                                                        TAG                  IMAGE ID       CREATED             SIZE
 book-manage-frontend                                              latest               9d5f75ab1059   2 minutes ago       43.3MB
 book-manage-backend                                               latest               02a5b047c36b   About an hour ago   223MB
+
 docker tag 9d5f75ab1059 registry.cn-heyuan.aliyuncs.com/richard-dev/book-manage-frontend:1.0
 docker push registry.cn-heyuan.aliyuncs.com/richard-dev/book-manage-frontend:1.0 
 #output
